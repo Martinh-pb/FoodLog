@@ -34,6 +34,8 @@
     <Folder Include="Models\Food\" />
     <Folder Include="Models\Database\" />
     <Folder Include="Models\Recipe\" />
+    <Folder Include="Data\Food\" />
+    <Folder Include="Data\Recipe\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.ComponentModel.Annotations">

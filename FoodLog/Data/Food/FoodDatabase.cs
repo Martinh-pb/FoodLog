@@ -6,7 +6,7 @@ using FoodLog.Models.DB;
 using SQLite;
 using SQLiteNetExtensionsAsync.Extensions;
 
-namespace FoodLog.Data
+namespace FoodLog.FoodData
 {
     public class FoodDatabase
     {
@@ -23,6 +23,7 @@ namespace FoodLog.Data
             _database.CreateTableAsync<FoodDayEntry>().Wait();
         }
 
+        #region Food
         public Task<List<FoodDayEntry>> GetAll()
         {
             var r = _database.Table<FoodDayEntry>().ToListAsync();
@@ -100,5 +101,20 @@ namespace FoodLog.Data
                 throw;
             }
         }
+
+        #endregion
+        public Task<List<Recipe>> GetRecipes()
+        {
+            var recipes = _database.Table<Recipe>().Where(r => r.IsReadOnly == false).ToListAsync();
+            return recipes;
+        }
+
+        public Task<List<RecipeItem>> GetRecipeItems(int fromRecipeId)
+        {
+            var items = _database.Table<RecipeItem>().Where(i => i.RecipeId == fromRecipeId).ToListAsync();
+            return items;
+        }
+        #region Recipe
+        #endregion
     }
 }

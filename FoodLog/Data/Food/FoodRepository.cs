@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using FoodLog.FoodModels;
 
-namespace FoodLog.Data
+namespace FoodLog.FoodData
 {
     public class FoodRepository : IFoodRepository
     {

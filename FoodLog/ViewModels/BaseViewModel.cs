@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-using FoodLog.Data;
+using FoodLog.FoodData;
 
 namespace FoodLog.ViewModels
 {

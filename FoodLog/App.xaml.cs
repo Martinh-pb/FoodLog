@@ -1,7 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 using FoodLog.Views;
-using FoodLog.Data;
+using FoodLog.FoodData;
 using System.IO;
 
 namespace FoodLog
