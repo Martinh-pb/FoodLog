@@ -3,6 +3,7 @@ using Xamarin.Forms;
 using FoodLog.Views;
 using FoodLog.FoodData;
 using System.IO;
+using FoodLog.RecipeData;
 
 namespace FoodLog
 {
@@ -12,6 +13,7 @@ namespace FoodLog
 
         static FoodDatabase database;
         static IFoodRepository repository;
+        static IRecipeRepository recipeRepository;
 
         public static IFoodRepository Repository
         { 
@@ -23,6 +25,19 @@ namespace FoodLog
                 }
 
                 return repository;
+            }
+        }
+
+        public static IRecipeRepository RecipeRepository
+        {
+            get
+            {
+                if (recipeRepository == null)
+                {
+                    recipeRepository = new RecipeRepository(Database);
+                }
+
+                return recipeRepository;
             }
         }
 

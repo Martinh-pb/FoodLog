@@ -4,12 +4,14 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 using FoodLog.FoodData;
+using FoodLog.RecipeData;
 
 namespace FoodLog.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
         private IFoodRepository _database;
+        private IRecipeRepository _repositoryDatabase;
 
         public BaseViewModel()
         {
@@ -26,6 +28,19 @@ namespace FoodLog.ViewModels
                 }
 
                 return _database; 
+            }
+        }
+
+        public IRecipeRepository RecipeRepository
+        {
+            get
+            {
+                if (_repositoryDatabase == null)
+                {
+                    _repositoryDatabase = App.RecipeRepository;
+                }
+
+                return _repositoryDatabase;
             }
         }
 

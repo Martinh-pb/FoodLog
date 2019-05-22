@@ -54,7 +54,6 @@ namespace FoodLog.Views.LogFood
 
             if (viewModel.Date == DateTime.MinValue)
                 viewModel.InitDayCommand.Execute(null);
-            //viewModel.LoadItemsCommand.Execute(null);
         }
     }
 }
