@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:local="clr-namespace:FoodLog.Converters"
+             x:Class="FoodLog.Views.Food.FoodDetailPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:DoubleConverter x:Key="DoubleConverter" />            
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>        
+        <ToolbarItem Text="Scan" Clicked="Handle_Clicked"/>
+        <ToolbarItem Text="Save" Clicked="Save_Clicked" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <ScrollView>
+        <StackLayout Spacing="10" Padding="15">
+            
+            <StackLayout Orientation="Horizontal" >
+            <Label Text="Naam" WidthRequest="200" FontSize="Small" />
+            <Entry Text="{Binding Food.Name}" WidthRequest="200" FontSize="Small" />
+            </StackLayout>            
+            
+            <StackLayout Orientation="Horizontal" >
+            <Label Text="Portie grootte" WidthRequest="100" FontSize="Small"/>
+            <Entry Keyboard="Numeric" Text="{Binding Food.Portion}" WidthRequest="95" FontSize="Medium" />    
+            
+             <Picker Title="Gram"       
+                     WidthRequest="100"
+                ItemsSource="{Binding PortionItems}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding SelectedPortion}" />
+             </StackLayout>
+                
+            <StackLayout Orientation="Horizontal" >        
+            <Label Text="Energie (kcal)" WidthRequest="200" FontSize="Small"/>
+            <Entry Keyboard="Numeric" Text="{Binding Food.Calories, Converter={StaticResource DoubleConverter}}" WidthRequest="200" FontSize="Medium" />
+            </StackLayout>
+                
+            <StackLayout Orientation="Horizontal" >
+            <Label Text="Vet" WidthRequest="200" FontSize="Small"/>
+            <Entry Keyboard="Numeric" Text="{Binding Food.Fat, Converter={StaticResource DoubleConverter}}" WidthRequest="200" FontSize="Medium" />
+            </StackLayout>
+                
+            <StackLayout Orientation="Horizontal" >
+            <Label Text="Verzadigd vet" WidthRequest="200" FontSize="Small"/>
+            <Entry Keyboard="Numeric" Text="{Binding Food.SaturatedFat, Converter={StaticResource DoubleConverter}}" WidthRequest="200" FontSize="Medium" />
+            </StackLayout>
+            
+            <StackLayout Orientation="Horizontal" >
+            <Label Text="Eiwit" WidthRequest="200" FontSize="Small"/>
+            <Entry Keyboard="Numeric" Text="{Binding Food.Protein, Converter={StaticResource DoubleConverter}}" WidthRequest="200" FontSize="Medium" />
+            </StackLayout>
+            
+            <StackLayout Orientation="Horizontal" >
+            <Label Text="Koolydraten" WidthRequest="200" FontSize="Small"/>
+            <Entry Keyboard="Numeric" Text="{Binding Food.Carbs, Converter={StaticResource DoubleConverter}}" WidthRequest="200" FontSize="Medium" />
+            </StackLayout>
+                
+            <StackLayout Orientation="Horizontal" >                            
+            <Label Text="Suiker" WidthRequest="200" FontSize="Small"/>
+            <Entry Keyboard="Numeric" Text="{Binding Food.Sugar, Converter={StaticResource DoubleConverter}}" WidthRequest="200" FontSize="Medium" />
+            </StackLayout>
+                              
+            <StackLayout Orientation="Horizontal" > 
+            <Label Text="Vezels" WidthRequest="200" FontSize="Small"/>
+            <Entry Keyboard="Numeric" Text="{Binding Food.Fiber, Converter={StaticResource DoubleConverter}}" WidthRequest="200" FontSize="Medium" />
+            </StackLayout>
+                        
+            <StackLayout Orientation="Horizontal" >
+            <Label Text="Natrium" WidthRequest="200" FontSize="Small"/>
+            <Entry Keyboard="Numeric" Text="{Binding Food.Natrium, Converter={StaticResource DoubleConverter}}" WidthRequest="200" FontSize="Medium"/>
+            </StackLayout>
+                
+            <StackLayout Orientation="Horizontal" >
+            <Label Text="Barcode" WidthRequest="200" FontSize="Small"/>
+            <Label Text="" x:Name="BarCode" WidthRequest="200" FontSize="Small"/>
+            </StackLayout>
+       </StackLayout>
+            </ScrollView>    
+    </ContentPage.Content>
+</ContentPage>

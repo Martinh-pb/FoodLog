@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="FoodLog.Views.LogFood.LogAddToDayPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Cancel" Clicked="Cancel_Clicked" />
+        <ToolbarItem Text="Save" Clicked="Save_Clicked" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout Spacing="10" Padding="15">   
+            <Label Text="{Binding FoodEntry.Food.Name}"/>
+            
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />             
+              </Grid.RowDefinitions>
+
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+              <Button Text="Cal" Grid.Row="0" Grid.Column="0" />
+              <Button Text="Carbs" Grid.Row="0" Grid.Column="1" />
+              <Button Text="Eiwitten" Grid.Row="0" Grid.Column="2" />
+              <Button Text="Vet" Grid.Row="0" Grid.Column="3" />
+              <Button Text="{Binding Cals, Mode=TwoWay} " Grid.Row="1" Grid.Column="0" />
+              <Button Text="{Binding Carbs}" Grid.Row="1" Grid.Column="1" />
+              <Button Text="{Binding Protein}" Grid.Row="1" Grid.Column="2" />
+              <Button Text="{Binding Fat}" Grid.Row="1" Grid.Column="3" />
+              <Button Text="" Grid.Row="2" Grid.Column="0" />
+              <Button Text="{Binding CarbsPerc}" Grid.Row="2" Grid.Column="1" />
+              <Button Text="{Binding ProteinPerc}" Grid.Row="2" Grid.Column="2" />
+              <Button Text="{Binding FatPerc}" Grid.Row="2" Grid.Column="3" />
+            </Grid>
+            
+            <Entry Keyboard="Numeric" Text="{Binding FoodEntry.Amount}" 
+                   Placeholder="Hoeveelheid" TextChanged="Handle_TextChanged"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

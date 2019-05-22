@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="FoodLog.Views.Food.FoodOverviewPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Scan" Clicked="Handle_Clicked"/>
+        <ToolbarItem Text="Add" Clicked="AddItem_Clicked" />
+    </ContentPage.ToolbarItems>
+     <ContentPage.Content>
+        <StackLayout Spacing="20" Padding="15">
+        <SearchBar
+            Placeholder="Zoek voedsel"
+                Text="{Binding SearchText}"
+                SearchCommand="{Binding SearchCommand}"  
+                SearchCommandParameter="{Binding Text}">   
+            </SearchBar>            
+        <ListView
+                x:Name="FoodListView"
+                ItemsSource="{Binding Foods}"
+                HasUnevenRows="true"
+                ItemSelected="Handle_ItemSelected"
+                SeparatorVisibility="None"
+                IsPullToRefreshEnabled="true"  
+                  RefreshCommand="{Binding LoadItemsCommand}"
+                  IsRefreshing="{Binding IsBusy, Mode=OneWay}">
+                <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Padding="10" Orientation="Horizontal">
+                            <Label Text="{Binding Name}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" FontSize="16" />
+                            <Label Text="{Binding Calories}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="13" />
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+     </ContentPage.Content>
+</ContentPage>

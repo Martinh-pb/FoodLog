@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="FoodLog.Views.LogFood.LogOverviewPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Clicked="AddItem_Clicked" />
+    </ContentPage.ToolbarItems>
+    <StackLayout>
+        <ListView x:Name="ItemsListView" ItemsSource="{Binding Items}" 
+                  SeparatorVisibility="None"
+                    HasUnevenRows="true" IsPullToRefreshEnabled="true"  
+                  RefreshCommand="{Binding LoadItemsCommand}"
+                  IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                  IsGroupingEnabled="true" ItemSelected="OnItemSelected">
+            <ListView.GroupHeaderTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout BackgroundColor="#eee" Orientation="Vertical" Margin="5" Padding="5">
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding Title}" FontSize="Small"/>
+                                <Label Text="{Binding Calculated}" FontSize="Small"/>                
+                            </StackLayout>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.GroupHeaderTemplate>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <ViewCell.ContextActions>            
+                            <MenuItem Clicked="OnDelete" CommandParameter="{Binding .}"
+                               Text="Delete" IsDestructive="True" />
+                         </ViewCell.ContextActions>
+                        <StackLayout Padding="10" Orientation="Horizontal">
+                            <Label Text="{Binding Food.Name}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" FontSize="12" />
+                            <Label Text="{Binding Calories}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="12" />
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>

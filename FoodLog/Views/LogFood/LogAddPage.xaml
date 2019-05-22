@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="FoodLog.Views.LogFood.LogAddPage">
+<ContentPage.ToolbarItems>
+        <ToolbarItem Text="Cancel" Clicked="Cancel_Clicked" />      
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout Spacing="10" Padding="15">          
+            <Picker Title="Ontbijt, Luch of Diner"                
+                ItemsSource="{Binding MealTypes}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding SelectedMealType}" />
+            
+            <SearchBar Placeholder="Zoek voedsel"
+                Text="{Binding SearchText}"
+                SearchCommand="{Binding SearchCommand}"  
+                SearchCommandParameter="{Binding Text}"></SearchBar>
+            
+            <Label Text="Recent gekozen:" FontSize="Small"/>
+            <ListView
+                x:Name="FoodListView"
+                ItemsSource="{Binding SelectableFoods}"
+                SeparatorVisibility="None"
+                ItemSelected="OnItemSelected"
+                HasUnevenRows="true">
+                <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Padding="10" Orientation="Vertical">
+                            <Label Text="{Binding Name}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" FontSize="16" />
+                            <Label Text="{Binding Amount}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="13" />
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
