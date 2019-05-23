@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodLog.iOS", "FoodLog.iOS\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodLog", "FoodLog\FoodLog.csproj", "{8BC3C23C-FAE6-4DF3-A37A-8C956A653B5B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodLog.NUnit", "FoodLog.NUnit\FoodLog.NUnit.csproj", "{8FA46146-D622-4D9D-AA49-71C1302F1DF7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,5 +55,17 @@ Global
 		{8BC3C23C-FAE6-4DF3-A37A-8C956A653B5B}.Debug|iPhone.Build.0 = Debug|Any CPU
 		{8BC3C23C-FAE6-4DF3-A37A-8C956A653B5B}.Release|iPhone.ActiveCfg = Release|Any CPU
 		{8BC3C23C-FAE6-4DF3-A37A-8C956A653B5B}.Release|iPhone.Build.0 = Release|Any CPU
+		{8FA46146-D622-4D9D-AA49-71C1302F1DF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FA46146-D622-4D9D-AA49-71C1302F1DF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FA46146-D622-4D9D-AA49-71C1302F1DF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FA46146-D622-4D9D-AA49-71C1302F1DF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FA46146-D622-4D9D-AA49-71C1302F1DF7}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{8FA46146-D622-4D9D-AA49-71C1302F1DF7}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{8FA46146-D622-4D9D-AA49-71C1302F1DF7}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{8FA46146-D622-4D9D-AA49-71C1302F1DF7}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{8FA46146-D622-4D9D-AA49-71C1302F1DF7}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{8FA46146-D622-4D9D-AA49-71C1302F1DF7}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{8FA46146-D622-4D9D-AA49-71C1302F1DF7}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{8FA46146-D622-4D9D-AA49-71C1302F1DF7}.Release|iPhone.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
