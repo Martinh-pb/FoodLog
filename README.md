@@ -1,4 +1,3 @@
 # FoodLog
-Food logging app
+App to keep track of what you eat.
 
-IOS and Android App to keep tracking food
