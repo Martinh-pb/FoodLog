@@ -92,19 +92,29 @@ namespace FoodLog.ViewModels.LogFood
                 {
                     BreakFast.Add(entry);
                 }
+
+                BreakFast.Add(new FoodPerDay() { Id = -1, Date = Date, Time = Date, MealType = MealType.BreakFast });
+
                 foreach (var entry in entries.Where(e => e.MealType == MealType.Lunch))
                 {
                     Lunch.Add(entry);
                 }
+
+                Lunch.Add(new FoodPerDay() { Id = -1, Date = Date, Time = Date, MealType = MealType.Lunch });
+
                 foreach (var entry in entries.Where(e => e.MealType == MealType.Diner))
                 {
                     Diner.Add(entry);
                 }
+
+                Diner.Add(new FoodPerDay() { Id = -1, Date = Date, Time = Date, MealType = MealType.Diner });
+
                 foreach (var entry in entries.Where(e => e.MealType == MealType.Snack))
                 {
                     Snack.Add(entry);
                 }
-       
+                Snack.Add(new FoodPerDay() { Id = -1, Date = Date, Time = Date, MealType = MealType.Snack });
+
                 BreakFast.Calculated = BreakFast.Calcutate();
                 Lunch.Calculated = Lunch.Calcutate();
                 Diner.Calculated = Diner.Calcutate();

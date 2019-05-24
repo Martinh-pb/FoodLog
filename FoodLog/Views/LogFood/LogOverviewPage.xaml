@@ -1,15 +1,45 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="FoodLog.Views.LogFood.LogOverviewPage">
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:local="clr-namespace:FoodLog.Templates"
+             x:Class="FoodLog.Views.LogFood.LogOverviewPage">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" Clicked="AddItem_Clicked" />
     </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="logFoodTemplate">
+                    <ViewCell>
+                        <ViewCell.ContextActions>            
+                            <MenuItem Clicked="OnDelete" CommandParameter="{Binding .}"
+                               Text="Delete" IsDestructive="True" />
+                         </ViewCell.ContextActions>
+                        <StackLayout Padding="10" Orientation="Horizontal">
+                            <Label Text="{Binding Food.Name}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" FontSize="12" />
+                            <Label Text="{Binding Calories}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="12" />
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+                <DataTemplate x:Key="addFoodTemplate">
+                    <ViewCell>
+                        <StackLayout Padding="10" Orientation="Horizontal">
+                            <Label Text="Add" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" FontSize="12" />
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            <local:LogFoodOverviewDataTemplateSelector x:Key="logFoodOverviewDataTemplateSelector"
+                LogFoodTemplate="{StaticResource logFoodTemplate}"
+                AddFoodTemplate="{StaticResource addFoodTemplate}" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <StackLayout>
         <ListView x:Name="ItemsListView" ItemsSource="{Binding Items}" 
                   SeparatorVisibility="None"
                     HasUnevenRows="true" IsPullToRefreshEnabled="true"  
                   RefreshCommand="{Binding LoadItemsCommand}"
                   IsRefreshing="{Binding IsBusy, Mode=OneWay}"
-                  IsGroupingEnabled="true" ItemSelected="OnItemSelected">
+                  IsGroupingEnabled="true" ItemSelected="OnItemSelected"
+                  ItemTemplate="{StaticResource logFoodOverviewDataTemplateSelector}">
             <ListView.GroupHeaderTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -22,20 +52,6 @@
                     </ViewCell>
                 </DataTemplate>
             </ListView.GroupHeaderTemplate>
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <ViewCell.ContextActions>            
-                            <MenuItem Clicked="OnDelete" CommandParameter="{Binding .}"
-                               Text="Delete" IsDestructive="True" />
-                         </ViewCell.ContextActions>
-                        <StackLayout Padding="10" Orientation="Horizontal">
-                            <Label Text="{Binding Food.Name}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" FontSize="12" />
-                            <Label Text="{Binding Calories}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="12" />
-                        </StackLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
         </ListView>
     </StackLayout>
 </ContentPage>
