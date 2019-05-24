@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FoodLog.FoodData;
 using FoodLog.FoodModels;
 using FoodLog.ViewModels.LogFood;
@@ -25,16 +26,28 @@ namespace FoodLog.Views.LogFood
             if (item == null)
                 return;
 
-            await Navigation.PushAsync(new LogDetailPage(new LogDetailViewModel(item)));
-
+            if (item.Id < 0)
+            {
+                await AddItem(item.MealType);
+            }
+            else
+            {
+                await Navigation.PushAsync(new LogDetailPage(new LogDetailViewModel(item)));
+            }
             // Manually deselect item.
             ItemsListView.SelectedItem = null;
         }
 
         async void AddItem_Clicked(object sender, EventArgs e)
         {
+            await AddItem(MealType.BreakFast);
+        }
+
+        async Task AddItem(MealType mealType)
+        {
             FoodPerDay entry = new FoodPerDay()
             {
+                MealType = mealType,
                 Date = viewModel.Date,
                 Time = viewModel.Date
             };
