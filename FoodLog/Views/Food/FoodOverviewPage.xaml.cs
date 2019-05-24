@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FoodLog.FoodData;
 using FoodLog.ViewModels;
 using Xamarin.Forms;
 
@@ -13,7 +14,8 @@ namespace FoodLog.Views.Food
         {
             InitializeComponent();
 
-            BindingContext = viewModel = new FoodOverviewViewModel();
+            var repo = Injector.Resolve<IFoodRepository>();
+            BindingContext = viewModel = new FoodOverviewViewModel(repo);
         }
 
         async void AddItem_Clicked(object sender, EventArgs e)

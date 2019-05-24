@@ -8,12 +8,14 @@ using SQLiteNetExtensionsAsync.Extensions;
 
 namespace FoodLog.FoodData
 {
-    public class FoodDatabase
+    public class FoodDatabase : IFoodDatabase
     {
         readonly SQLiteAsyncConnection _database;
 
-        public FoodDatabase(string path)
+        public FoodDatabase()
         {
+            string path = App.DBPath;
+
             _database = new SQLiteAsyncConnection(path);
 
             _database.CreateTableAsync<Target>().Wait();

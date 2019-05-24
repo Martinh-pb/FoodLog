@@ -10,39 +10,12 @@ namespace FoodLog.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        private IFoodRepository _database;
-        private IRecipeRepository _repositoryDatabase;
-
         public BaseViewModel()
         {
-            //_database = App.Database;
         }
 
-        public IFoodRepository FoodDatabase
-        {
-            get 
-            { 
-                if (_database == null)
-                {
-                    _database = App.Repository;
-                }
-
-                return _database; 
-            }
-        }
-
-        public IRecipeRepository RecipeRepository
-        {
-            get
-            {
-                if (_repositoryDatabase == null)
-                {
-                    _repositoryDatabase = App.RecipeRepository;
-                }
-
-                return _repositoryDatabase;
-            }
-        }
+        public IFoodRepository FoodRepository { get; set; }
+        public IRecipeRepository RecipeRepository { get; set; }
 
         bool isBusy = false;
         public bool IsBusy
