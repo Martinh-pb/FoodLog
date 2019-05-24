@@ -18,16 +18,6 @@ namespace FoodLog.Views.LogFood
             BindingContext = this.viewModel;
         }
 
-        public LogAddPage()
-        {
-            InitializeComponent();
-
-            FoodPerDay entry = new FoodPerDay();
-
-            this.viewModel = new LogAddViewModel(entry);
-            BindingContext = this.viewModel;
-        }
-
         async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
         {
             var item = args.SelectedItem as FoodModels.Food;

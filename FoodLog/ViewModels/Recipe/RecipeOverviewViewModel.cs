@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using FoodLog.RecipeData;
 using Xamarin.Forms;
 
 namespace FoodLog.ViewModels.Recipe
@@ -13,8 +14,9 @@ namespace FoodLog.ViewModels.Recipe
 
         public Command InitCommand { get; set; }
 
-        public RecipeOverviewViewModel()
+        public RecipeOverviewViewModel(IRecipeRepository recipeRepository)
         {
+            RecipeRepository = recipeRepository;
             Recipes = new ObservableCollection<Models.Recipe.Recipe>();
 
             InitCommand = new Command(async () => await ExecuteInit());

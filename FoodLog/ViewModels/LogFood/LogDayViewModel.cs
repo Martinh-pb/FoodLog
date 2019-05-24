@@ -9,6 +9,7 @@ using Xamarin.Forms;
 using FoodLog.FoodModels;
 using FoodLog.Views.LogFood;
 using System.Collections.Generic;
+using FoodLog.FoodData;
 
 namespace FoodLog.ViewModels.LogFood
 {
@@ -25,8 +26,10 @@ namespace FoodLog.ViewModels.LogFood
 
         public DateTime Date { get; set; }
 
-        public LogDayViewModel()
+        public LogDayViewModel(IFoodRepository foodRepository)
         {
+            FoodRepository = foodRepository;
+
             Title = "Browse";
             Items = new ObservableCollection<FoodDayGroup>();
 
@@ -51,13 +54,13 @@ namespace FoodLog.ViewModels.LogFood
             {
                 var newItem = item as FoodPerDay;
 
-                await FoodDatabase.SaveFoodForDay(newItem);
+                await FoodRepository.SaveFoodForDay(newItem);
             });
         }
 
         public async Task DeleteItem(FoodPerDay foodPerDay)
         {
-            await FoodDatabase.DeleteFoodForDay(foodPerDay);
+            await FoodRepository.DeleteFoodForDay(foodPerDay);
         }
 
         async Task ExecuteDayCommand()
@@ -78,7 +81,7 @@ namespace FoodLog.ViewModels.LogFood
             {
                 //var tst = await FoodDatabase.GetAll();
 
-                List<FoodPerDay> entries = await FoodDatabase.GetFoodForDay(Date);
+                List<FoodPerDay> entries = await FoodRepository.GetFoodForDay(Date);
 
                 BreakFast.Clear();
                 Lunch.Clear();

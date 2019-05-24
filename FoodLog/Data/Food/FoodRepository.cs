@@ -7,9 +7,9 @@ namespace FoodLog.FoodData
 {
     public class FoodRepository : IFoodRepository
     {
-        private FoodDatabase foodDatabase;
+        private IFoodDatabase foodDatabase;
 
-        public FoodRepository(FoodDatabase foodDatabase)
+        public FoodRepository(IFoodDatabase foodDatabase)
         {
             this.foodDatabase = foodDatabase;
         }

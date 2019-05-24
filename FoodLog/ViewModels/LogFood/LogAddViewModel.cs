@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
+using FoodLog.FoodData;
 using FoodLog.FoodModels;
 using Xamarin.Forms;
 
@@ -24,8 +25,9 @@ namespace FoodLog.ViewModels.LogFood
 
         public ObservableCollection<Food> SelectableFoods { get; set; }
 
-        public LogAddViewModel(FoodPerDay entry)
+        public LogAddViewModel(IFoodRepository foodRepository, FoodPerDay entry)
         {
+            FoodRepository = foodRepository;
             Item = entry;
 
             SelectableFoods = new ObservableCollection<Food>();
@@ -46,7 +48,7 @@ namespace FoodLog.ViewModels.LogFood
             {
                 return _searchCommand ?? (_searchCommand = new Command<string>(async (text) =>
                 {
-                    var r = await FoodDatabase.FindFood(SearchText);
+                    var r = await FoodRepository.FindFood(SearchText);
                     SelectableFoods.Clear();
                     r.ForEach(i => SelectableFoods.Add(i));
                 }));

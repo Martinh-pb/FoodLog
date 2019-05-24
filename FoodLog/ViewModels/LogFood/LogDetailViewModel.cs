@@ -9,8 +9,8 @@ namespace FoodLog.ViewModels.LogFood
         public FoodPerDay Item { get; set; }
         public LogDetailViewModel(FoodPerDay item = null)
         {
-            Title = item.Food?.Name;
             Item = item;
+            Title = Item.Food?.Name;
         }
     }
 }

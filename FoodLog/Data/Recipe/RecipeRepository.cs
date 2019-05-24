@@ -8,9 +8,9 @@ namespace FoodLog.RecipeData
 {
     public class RecipeRepository : IRecipeRepository
     {
-        private FoodDatabase foodDatabase;
+        private IFoodDatabase foodDatabase;
 
-        public RecipeRepository(FoodDatabase foodDatabase)
+        public RecipeRepository(IFoodDatabase foodDatabase)
         {
             this.foodDatabase = foodDatabase;
         }

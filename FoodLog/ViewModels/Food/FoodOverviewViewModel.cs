@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using FoodLog.FoodData;
 using FoodLog.FoodModels;
 using FoodLog.Views.Food;
 using Xamarin.Forms;
@@ -13,8 +14,10 @@ namespace FoodLog.ViewModels
         public string SearchText {get; set;}
         public Command LoadItemsCommand { get; set; }
 
-        public FoodOverviewViewModel()
+        public FoodOverviewViewModel(IFoodRepository foodRepository)
         {
+            FoodRepository = foodRepository;
+
             Foods = new ObservableCollection<Food>();
             LoadItemsCommand = new Command(async () => await ExecuteDayCommand());
 
@@ -31,7 +34,7 @@ namespace FoodLog.ViewModels
 
         private async Task<int> SaveFood(Food food)
         {
-            return await FoodDatabase.SaveFood(food);
+            return await FoodRepository.SaveFood(food);
         }
 
         private ICommand _searchCommand;
@@ -41,7 +44,7 @@ namespace FoodLog.ViewModels
             {
                 return _searchCommand ?? (_searchCommand = new Command<string>(async (text) =>
                 {
-                    var r =  await FoodDatabase.FindFood(SearchText);
+                    var r =  await FoodRepository.FindFood(SearchText);
                     Foods.Clear();
                     r.ForEach(i => Foods.Add(i));
                     OnPropertyChanged("Foods");
@@ -58,7 +61,7 @@ namespace FoodLog.ViewModels
             try
             {
                 Foods.Clear();
-                System.Collections.Generic.List<Food> r = await FoodDatabase.GetFoods();
+                System.Collections.Generic.List<Food> r = await FoodRepository.GetFoods();
                 r.ForEach(i => Foods.Add(i));
 
                 OnPropertyChanged("Foods");

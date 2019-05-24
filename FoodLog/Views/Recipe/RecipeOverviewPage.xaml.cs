@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FoodLog.RecipeData;
 using FoodLog.ViewModels.Recipe;
 using Xamarin.Forms;
 
@@ -13,7 +14,8 @@ namespace FoodLog.Views.Recipe
         {
             InitializeComponent();
 
-            BindingContext = viewModel = new RecipeOverviewViewModel();
+            var repo = Injector.Resolve<IRecipeRepository>();
+            BindingContext = viewModel = new RecipeOverviewViewModel(repo);
         }
 
         async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)

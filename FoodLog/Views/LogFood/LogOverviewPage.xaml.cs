@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FoodLog.FoodData;
 using FoodLog.FoodModels;
 using FoodLog.ViewModels.LogFood;
 using Xamarin.Forms;
@@ -14,7 +15,8 @@ namespace FoodLog.Views.LogFood
         {
             InitializeComponent();
 
-            BindingContext = viewModel = new LogDayViewModel();
+            var r = Injector.Resolve<IFoodRepository>();
+            BindingContext = viewModel = new LogDayViewModel(r);
         }
 
         async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
@@ -37,7 +39,8 @@ namespace FoodLog.Views.LogFood
                 Time = viewModel.Date
             };
 
-            await Navigation.PushModalAsync(new NavigationPage(new LogAddPage(new LogAddViewModel(entry))));
+            var repo = Injector.Resolve<IFoodRepository>();
+            await Navigation.PushModalAsync(new NavigationPage(new LogAddPage(new LogAddViewModel(repo, entry))));
         }
 
         async public void OnDelete(object sender, EventArgs e)
