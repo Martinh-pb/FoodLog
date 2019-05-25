@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             x:Class="FoodLog.Views.Food.FoodOverviewPage">
+             xmlns:design="clr-namespace:FoodLog;"
+             x:Class="FoodLog.Views.Food.FoodOverviewPage"
+             BindingContext="{x:Static design:ViewModelLocator.ViewModelLocator.FoodOverviewModel}">
     <ContentPage.ToolbarItems>
         <ToolbarItem Icon="icons8-barcode-scanner-30" Clicked="Handle_Clicked"/>
         <ToolbarItem Icon="icons8-plus-math-30.png" Clicked="AddItem_Clicked" />
     </ContentPage.ToolbarItems>
      <ContentPage.Content>
-        <StackLayout Spacing="20" Padding="15">
+        <StackLayout Spacing="20" Padding="5">
         <SearchBar
             Placeholder="Zoek voedsel"
                 Text="{Binding SearchText}"
@@ -21,15 +23,29 @@
                 ItemSelected="Handle_ItemSelected"
                 SeparatorVisibility="None"
                 IsPullToRefreshEnabled="true"  
-                  RefreshCommand="{Binding LoadItemsCommand}"
-                  IsRefreshing="{Binding IsBusy, Mode=OneWay}">
+                RefreshCommand="{Binding LoadItemsCommand}"
+                IsRefreshing="{Binding IsBusy, Mode=OneWay}">
                 <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout Padding="10" Orientation="Horizontal">
-                            <Label Text="{Binding Name}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" FontSize="16" />
-                            <Label Text="{Binding Calories}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="13" />
-                        </StackLayout>
+                        <Grid Margin="0,0,0,5" RowSpacing="2">
+                            <Grid.RowDefinitions>
+                                    <RowDefinition Height="20"/> 
+                                    <RowDefinition Height="20"/> 
+                                </Grid.RowDefinitions>
+                                
+                                <Grid.ColumnDefinitions>                                    
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="50"/>
+                                </Grid.ColumnDefinitions>
+                                
+                            <Label VerticalOptions="Center" Grid.Column="0" Grid.Row="0" Text="{Binding Name}" LineBreakMode="NoWrap"  FontSize="Default" />
+                            <Label VerticalOptions="Center" HorizontalTextAlignment="End"  Grid.Column="1" Grid.Row="0" Text="{Binding Calories}" LineBreakMode="NoWrap" FontSize="Default" />
+
+                            <Label VerticalOptions="Center" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"  Text="{Binding Portion}" LineBreakMode="NoWrap" FontSize="Small" />
+                                     
+                        </Grid>    
+                            
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>

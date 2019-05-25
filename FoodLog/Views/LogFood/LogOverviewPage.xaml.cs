@@ -16,18 +16,12 @@ namespace FoodLog.Views.LogFood
         {
             InitializeComponent();
 
-            if (DesignMode.IsDesignModeEnabled)
-            {
-                viewModel = ViewModelLocator.ViewModelLocator.ItemsViewModel;
-            }
-            else
+            if (!DesignMode.IsDesignModeEnabled)
             {
                 var r = Injector.Resolve<IFoodRepository>();
                 viewModel = new LogDayViewModel(r);
-
+                BindingContext = viewModel;
             }
-            BindingContext = viewModel;
-
         }
 
         async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
@@ -76,8 +70,8 @@ namespace FoodLog.Views.LogFood
 
         public void ListHeaderTapped(object sender, EventArgs e)
         {
-            StackLayout stackLayout = sender as StackLayout;
-            FoodDayGroup g = stackLayout.BindingContext as FoodDayGroup;
+            Grid grid = sender as Grid;
+            FoodDayGroup g = grid.BindingContext as FoodDayGroup;
             viewModel.SwitchHeader(g);
         }
 
@@ -101,4 +95,53 @@ namespace FoodLog.Views.LogFood
             }
         }
     }
+    /*
+     * 
+     * 
+     <ListView.GroupHeaderTemplate>
+                <DataTemplate>
+                    <ViewCell>                    
+                        <StackLayout BackgroundColor="#000" Orientation="Vertical" 
+                                     Margin="0" Padding="5">
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="ListHeaderTapped" 
+                                                      CommandParameter="{Binding .}"/>
+                            </StackLayout.GestureRecognizers>
+                            
+                            <StackLayout Orientation="Horizontal">
+                                <Label TextColor="White" Text="{Binding Title}" FontSize="Small"/>
+                                <Label TextColor="White" Text="{Binding Calculate}" FontSize="Small"/>
+                                <Label TextColor="White" Text="{Binding Calories}" FontSize="Small"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.GroupHeaderTemplate>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                    </ViewCell>                    
+                </DataTemplate>
+            </ListView.ItemTemplate>
+                        <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid Margin="5,0,5,0" Padding="0,5,0,5" RowSpacing="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="15"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="8*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding Food.Name}" FontSize="Small"/>
+                            <Label Grid.Row="0" Grid.Column="1" HorizontalOptions="End" Text="{Binding Calories}" FontSize="Small"/>
+                            <Label Grid.Row="1" Grid.Column="0" Text="{Binding AmountDescription}" FontSize="Micro"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+     */
 }

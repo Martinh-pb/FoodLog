@@ -14,8 +14,11 @@ namespace FoodLog.Views.Recipe
         {
             InitializeComponent();
 
-            var repo = Injector.Resolve<IRecipeRepository>();
-            BindingContext = viewModel = new RecipeOverviewViewModel(repo);
+            if (!DesignMode.IsDesignModeEnabled)
+            {
+                var repo = Injector.Resolve<IRecipeRepository>();
+                BindingContext = viewModel = new RecipeOverviewViewModel(repo);
+            }
         }
 
         async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)

@@ -19,6 +19,7 @@ namespace FoodLog.ViewModels
             FoodRepository = foodRepository;
 
             Foods = new ObservableCollection<Food>();
+
             LoadItemsCommand = new Command(async () => await ExecuteDayCommand());
 
             MessagingCenter.Subscribe<FoodAddPage, Food>(this, "SaveItem", async (obj, item) =>
@@ -54,6 +55,11 @@ namespace FoodLog.ViewModels
 
         async Task ExecuteDayCommand()
         {
+            if (DesignMode.IsDesignModeEnabled)
+            {
+                return;
+            }
+
             if (IsBusy)
                 return;
 

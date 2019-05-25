@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="FoodLog.Views.Recipe.RecipeOverviewPage">
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="FoodLog.Views.Recipe.RecipeOverviewPage"
+    xmlns:design="clr-namespace:FoodLog;"
+    BindingContext="{x:Static design:ViewModelLocator.ViewModelLocator.RecipeOverviewModel}">
     <ContentPage.ToolbarItems>
         <ToolbarItem Icon="icons8-plus-math-30.png" Clicked="AddItem_Clicked" />
     </ContentPage.ToolbarItems>
@@ -18,7 +23,7 @@
                                Text="Delete" IsDestructive="True" />
                          </ViewCell.ContextActions>
                         <StackLayout Padding="10" Orientation="Horizontal">
-                            <Label Text="{Binding Name}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" FontSize="12" />
+                            <Label Text="{Binding Id}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" FontSize="12" />
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>

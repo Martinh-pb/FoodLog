@@ -11,6 +11,13 @@ namespace FoodLog.FoodModels
         public string Title { get; set; }
         public MealType MealType { get; set; }
 
+        public FoodDayGroup(string title, MealType mealType)
+        {
+            Title = title;
+            MealType = mealType;
+            ShowPercentage = true;
+        }
+
         private bool showPercentage;
         public bool ShowPercentage
         {
@@ -18,53 +25,101 @@ namespace FoodLog.FoodModels
             set
             {
                 showPercentage = value;
+                Calcutate();
             }
         }
 
-        private string calculated;
-        public string Calculated
+        public void Calcutate() 
         {
-            get
-            {
-                return calculated;
-            }
-            set
-            {
-                calculated = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("Calculated"));
-            }
-        }
+            string perc = ShowPercentage ? "%" : string.Empty;
 
-        public string Calcutate() 
-        {
+            CarbDescrip = string.Format("Carb {0}{1}",
+                    ShowPercentage ? CarbInPercent : Carb,
+                    perc);
+
+            ProteinDescrip = string.Format("Prot {0}{1}",
+                    ShowPercentage ? ProteinInPercent : Protein,
+                    perc);
+
+            FatDescrip = string.Format("Fat {0}{1}",
+                    ShowPercentage ? FatInPercent : Fat,
+                    perc);
+
+            CaloriesDescrip = string.Format("{0}",
+                    Calories);
+
             if (ShowPercentage)
             {
-                return string.Format("c {0}% - e {1}% - v {2}%",
-                        CarbInPercent,
-                        ProteinInPercent,
-                        FatInPercent);
+
             }
             else
             {
+                /*
                 return string.Format("c {0} - e {1} - v {2}",
                         Carb,
                         Protein,
                         Fat);
+                        */                       
             }
         }
 
-        private double calcCarbs;
-        public double CalcCarbs
+        private string _carbDescrip;
+        public string CarbDescrip
         {
-            get { return calcCarbs; }
+            get
+            {
+                return _carbDescrip;
+            }
             set
             {
-                calcCarbs = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("CalcCarbs"));
+                _carbDescrip = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("CarbDescrip"));
             }
         }
 
-        public double Calories 
+        private string _proteinDescrip;
+        public string ProteinDescrip
+        {
+            get
+            {
+                return _proteinDescrip;
+            }
+            set
+            {
+                _proteinDescrip = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("ProteinDescrip"));
+            }
+        }
+
+        private string _fatDescrip;
+        public string FatDescrip
+        {
+            get
+            {
+                return _fatDescrip;
+            }
+            set
+            {
+                _fatDescrip = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("FatDescrip"));
+            }
+        }
+
+        private string _caloriesDescrip;
+        public string CaloriesDescrip
+        {
+            get
+            {
+                return _caloriesDescrip;
+            }
+            set
+            {
+                _caloriesDescrip = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("CaloriesDescrip"));
+            }
+        }
+
+        private double Calories 
         { 
             get 
             {
@@ -72,7 +127,7 @@ namespace FoodLog.FoodModels
             }
         }
 
-        public double Carb
+        private double Carb
         {
             get
             {
@@ -80,7 +135,7 @@ namespace FoodLog.FoodModels
             }
         }
 
-        public double CarbInPercent
+        private double CarbInPercent
         {
             get
             {
@@ -88,7 +143,7 @@ namespace FoodLog.FoodModels
             }
         }
 
-        public double Protein
+        private double Protein
         {
             get
             {
@@ -96,7 +151,7 @@ namespace FoodLog.FoodModels
             }
         }
 
-        public double ProteinInPercent
+        private double ProteinInPercent
         {
             get
             {
@@ -104,7 +159,7 @@ namespace FoodLog.FoodModels
             }
         }
 
-        public double Fat
+        private double Fat
         {
             get
             {
@@ -112,7 +167,7 @@ namespace FoodLog.FoodModels
             }
         }
 
-        public double FatInPercent
+        private double FatInPercent
         {
             get
             {
@@ -130,11 +185,5 @@ namespace FoodLog.FoodModels
             return Math.Round((toCalc / total) * 100);
         }
 
-        public FoodDayGroup(string title, MealType mealType)
-        {
-            Title = title;
-            MealType = mealType;
-            ShowPercentage = true;
-        }
     }
 }

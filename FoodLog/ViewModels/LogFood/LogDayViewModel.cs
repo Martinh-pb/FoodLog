@@ -32,24 +32,28 @@ namespace FoodLog.ViewModels.LogFood
 
         public LogDayViewModel(IFoodRepository foodRepository)
         {
-            FoodRepository = foodRepository;
+
 
             Title = "";
             Items = new ObservableCollection<FoodDayGroup>();
+            if (!DesignMode.IsDesignModeEnabled)
+            {
+                FoodRepository = foodRepository;
 
-            Date = DateTime.MinValue;
+                Date = DateTime.MinValue;
 
-            BreakFast = new FoodDayGroup("Ontbijt", MealType.BreakFast);
-            Items.Add(BreakFast);
+                BreakFast = new FoodDayGroup("Ontbijt", MealType.BreakFast);
+                Items.Add(BreakFast);
 
-            Lunch = new FoodDayGroup("Lunch", MealType.Lunch);
-            Items.Add(Lunch);
+                Lunch = new FoodDayGroup("Lunch", MealType.Lunch);
+                Items.Add(Lunch);
 
-            Diner = new FoodDayGroup("Diner", MealType.Diner);
-            Items.Add(Diner);
+                Diner = new FoodDayGroup("Diner", MealType.Diner);
+                Items.Add(Diner);
 
-            Snack = new FoodDayGroup("Snack", MealType.Snack);
-            Items.Add(Snack);
+                Snack = new FoodDayGroup("Snack", MealType.Snack);
+                Items.Add(Snack);
+            }
 
             InitDayCommand = new Command(async () => await ExecuteDayCommand());
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
@@ -140,10 +144,10 @@ namespace FoodLog.ViewModels.LogFood
                 }
                 Snack.Add(new FoodPerDay() { Id = -1, Date = Date, Time = Date, MealType = MealType.Snack });
 
-                BreakFast.Calculated = BreakFast.Calcutate();
-                Lunch.Calculated = Lunch.Calcutate();
-                Diner.Calculated = Diner.Calcutate();
-                Snack.Calculated = Snack.Calcutate();
+                BreakFast.Calcutate();
+                Lunch.Calcutate();
+                Diner.Calcutate();
+                Snack.Calcutate();
             }
             catch (Exception ex)
             {

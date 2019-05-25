@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace FoodLog.FoodModels
@@ -19,7 +20,7 @@ namespace FoodLog.FoodModels
         Ml = 1
     }
 
-    public class FoodPerDay : ICloneable
+    public class FoodPerDay : INotifyPropertyChanged, ICloneable
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }
@@ -27,6 +28,18 @@ namespace FoodLog.FoodModels
         public MealType MealType { get; set; }
         public double Amount { get; set; }
         public Food Food { get; set; }
+
+        public string AmountDescription
+        {
+            get
+            {
+                if (Food == null)
+                    return string.Empty;
+
+                string desc = Food.PortionType == PortionType.Gram ? "gram" : "ml";
+                return string.Format("{0} {1}", Amount, desc);
+            }
+        }
 
         public double Calories
         {
@@ -71,6 +84,8 @@ namespace FoodLog.FoodModels
                 return Calc(Food.Fat, Food.Portion, Amount);
             }
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public static double Calc(double item, double portion, double Amount)
         {

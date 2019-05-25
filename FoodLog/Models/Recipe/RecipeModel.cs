@@ -7,7 +7,7 @@ namespace FoodLog.Models.Recipe
     public class Recipe : ICloneable
     {
         public int Id { get; set; }
-        public int Name { get; set; }
+        public string Name { get; set; }
         public bool IsReadOnly { get; set; }
         public List<RecipeItem> Items { get; set; }
 

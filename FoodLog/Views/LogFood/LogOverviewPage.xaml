@@ -2,7 +2,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:local="clr-namespace:FoodLog.Templates"
-             x:Class="FoodLog.Views.LogFood.LogOverviewPage">
+             xmlns:design="clr-namespace:FoodLog;"
+             x:Class="FoodLog.Views.LogFood.LogOverviewPage"
+             BindingContext="{x:Static design:ViewModelLocator.ViewModelLocator.ItemsViewModel}">
     <ContentPage.ToolbarItems>
         <ToolbarItem Icon="icons8-back-30.png" Clicked="Previous_Date_Clicked"/>
         <ToolbarItem Text="{Binding DateText}" />
@@ -15,45 +17,42 @@
                 <Setter Property="TextColor" Value="#FFF"/>
                 <Setter Property="BorderRadius" Value="10"/>
             </Style>
-            
+           
             <DataTemplate x:Key="logFoodTemplate">
-                    <ViewCell Height="40">
-                        <ViewCell.ContextActions>            
-                            <MenuItem Clicked="OnDelete" CommandParameter="{Binding .}"
-                               Text="Delete" IsDestructive="True" />
-                         </ViewCell.ContextActions>
-                            <Grid Padding="5">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="40"/>        
-                                </Grid.RowDefinitions>
-                                
-                                <Grid.ColumnDefinitions>                                    
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="50"/>
-                                </Grid.ColumnDefinitions>
-                                
-                            <Label VerticalOptions="Center" Grid.Column="0" Grid.Row="0" Text="{Binding Food.Name}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" FontSize="Default" />
-                            <Label VerticalOptions="Center" HorizontalTextAlignment="End"  Grid.Column="1" Grid.Row="0" Text="{Binding Calories}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" FontSize="Default" />
-                                
-                            </Grid>
-                        
+                <ViewCell>
+                        <Grid Margin="5,0,5,0" Padding="0,5,0,5" RowSpacing="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="15"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="8*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding Food.Name}" FontSize="Small"/>
+                            <Label Grid.Row="0" Grid.Column="1" HorizontalOptions="End" Text="{Binding Calories}" FontSize="Small"/>
+                            <Label Grid.Row="1" Grid.Column="0" Text="{Binding AmountDescription}" FontSize="Micro"/>
+                        </Grid>
                     </ViewCell>
-                </DataTemplate>
-                <DataTemplate x:Key="addFoodTemplate">
-                    <ViewCell Height="40">
-                              <Grid Padding="5">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="40"/>        
-                                </Grid.RowDefinitions>
-                                
-                                <Grid.ColumnDefinitions>                                    
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-    
-                                <Image HorizontalOptions="Center" Grid.Column="0" Grid.Row="0" Source="icons8-plus-30.png"/>
-                            </Grid>
-                    </ViewCell>
-                </DataTemplate>
+            </DataTemplate>
+            
+            <DataTemplate x:Key="addFoodTemplate">
+                <ViewCell Height="40">
+                          <Grid Padding="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40"/>        
+                            </Grid.RowDefinitions>
+                            
+                            <Grid.ColumnDefinitions>                                    
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <Image HorizontalOptions="Center" Grid.Column="0" Grid.Row="0" Source="icons8-plus-30.png"/>
+                        </Grid>
+                </ViewCell>
+            </DataTemplate>
+            
             <local:LogFoodOverviewDataTemplateSelector x:Key="logFoodOverviewDataTemplateSelector"
                 LogFoodTemplate="{StaticResource logFoodTemplate}"
                 AddFoodTemplate="{StaticResource addFoodTemplate}" />
@@ -71,26 +70,36 @@
                   IsGroupingEnabled="true" 
                   ItemSelected="OnItemSelected"
                   ItemTemplate="{StaticResource logFoodOverviewDataTemplateSelector}">
+            
             <ListView.GroupHeaderTemplate>
                 <DataTemplate>
-                    <ViewCell>                    
-                        <StackLayout BackgroundColor="#000" Orientation="Vertical" 
-                                     Margin="0" Padding="5">
-                            <StackLayout.GestureRecognizers>
+                    <ViewCell>
+                        <Grid Margin="5,5,5,5" Padding="0,0,0,5" RowSpacing="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition Height="20"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="3*"/>                                                               
+                            </Grid.ColumnDefinitions>
+                            <Grid.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="ListHeaderTapped" 
                                                       CommandParameter="{Binding .}"/>
-                            </StackLayout.GestureRecognizers>
+                            </Grid.GestureRecognizers>
                             
-                            <StackLayout Orientation="Horizontal">
-                                <Label TextColor="White" Text="{Binding Title}" FontSize="Small"/>
-                                <Label TextColor="White" Text="{Binding Calculate}" FontSize="Small"/>
-                                <Label TextColor="White" Text="{Binding Calories}" FontSize="Small"/>
-                            </StackLayout>
-                        </StackLayout>
+                            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Title}" VerticalOptions="Center" FontSize="Large"/>
+                            <Label Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="1" Text="{Binding CaloriesDescrip}" VerticalOptions="Center" HorizontalOptions="End" FontSize="Medium"/>
+                            
+                            <Label Grid.Row="1" Grid.Column="0" Text="{Binding CarbDescrip}" VerticalOptions="Center" FontSize="Micro"/>
+                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding ProteinDescrip}" VerticalOptions="Center" FontSize="Micro"/>
+                            <Label Grid.Row="1" Grid.Column="2" Text="{Binding FatDescrip}" VerticalOptions="Center" FontSize="Micro"/>
+                            
+                        </Grid>
                     </ViewCell>
                 </DataTemplate>
             </ListView.GroupHeaderTemplate>
         </ListView>
     </StackLayout>
-
 </ContentPage>

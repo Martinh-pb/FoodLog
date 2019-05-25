@@ -14,8 +14,11 @@ namespace FoodLog.Views.Food
         {
             InitializeComponent();
 
-            var repo = Injector.Resolve<IFoodRepository>();
-            BindingContext = viewModel = new FoodOverviewViewModel(repo);
+            if (!DesignMode.IsDesignModeEnabled)
+            { 
+                var repo = Injector.Resolve<IFoodRepository>();
+                BindingContext = viewModel = new FoodOverviewViewModel(repo);
+            }
         }
 
         async void AddItem_Clicked(object sender, EventArgs e)
