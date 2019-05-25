@@ -16,8 +16,18 @@ namespace FoodLog.Views.LogFood
         {
             InitializeComponent();
 
-            var r = Injector.Resolve<IFoodRepository>();
-            BindingContext = viewModel = new LogDayViewModel(r);
+            if (DesignMode.IsDesignModeEnabled)
+            {
+                viewModel = ViewModelLocator.ViewModelLocator.ItemsViewModel;
+            }
+            else
+            {
+                var r = Injector.Resolve<IFoodRepository>();
+                viewModel = new LogDayViewModel(r);
+
+            }
+            BindingContext = viewModel;
+
         }
 
         async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
@@ -64,12 +74,31 @@ namespace FoodLog.Views.LogFood
             await viewModel.DeleteItem(toDelete);
         }
 
+        public void ListHeaderTapped(object sender, EventArgs e)
+        {
+            StackLayout stackLayout = sender as StackLayout;
+            FoodDayGroup g = stackLayout.BindingContext as FoodDayGroup;
+            viewModel.SwitchHeader(g);
+        }
+
+        public void Previous_Date_Clicked(object sender, EventArgs e)
+        {
+            viewModel.GotoPreviousDate();
+        }
+
+        public void Next_Date_Clicked(object sender, EventArgs e)
+        {
+            viewModel.GotoNextDate();
+        }
+
         protected override void OnAppearing()
         {
             base.OnAppearing();
 
             if (viewModel.Date == DateTime.MinValue)
+            {
                 viewModel.InitDayCommand.Execute(null);
+            }
         }
     }
 }

@@ -4,27 +4,54 @@
              xmlns:local="clr-namespace:FoodLog.Templates"
              x:Class="FoodLog.Views.LogFood.LogOverviewPage">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add" Clicked="AddItem_Clicked" />
+        <ToolbarItem Icon="icons8-back-30.png" Clicked="Previous_Date_Clicked"/>
+        <ToolbarItem Text="{Binding DateText}" />
+        <ToolbarItem Icon="icons8-forward-30.png" Clicked="Next_Date_Clicked" />
     </ContentPage.ToolbarItems>
     <ContentPage.Resources>
         <ResourceDictionary>
+            <Style x:Key="buttonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#000"/>
+                <Setter Property="TextColor" Value="#FFF"/>
+                <Setter Property="BorderRadius" Value="10"/>
+            </Style>
+            
             <DataTemplate x:Key="logFoodTemplate">
-                    <ViewCell>
+                    <ViewCell Height="40">
                         <ViewCell.ContextActions>            
                             <MenuItem Clicked="OnDelete" CommandParameter="{Binding .}"
                                Text="Delete" IsDestructive="True" />
                          </ViewCell.ContextActions>
-                        <StackLayout Padding="10" Orientation="Horizontal">
-                            <Label Text="{Binding Food.Name}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" FontSize="12" />
-                            <Label Text="{Binding Calories}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemDetailTextStyle}" FontSize="12" />
-                        </StackLayout>
+                            <Grid Padding="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40"/>        
+                                </Grid.RowDefinitions>
+                                
+                                <Grid.ColumnDefinitions>                                    
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="50"/>
+                                </Grid.ColumnDefinitions>
+                                
+                            <Label VerticalOptions="Center" Grid.Column="0" Grid.Row="0" Text="{Binding Food.Name}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" FontSize="Default" />
+                            <Label VerticalOptions="Center" HorizontalTextAlignment="End"  Grid.Column="1" Grid.Row="0" Text="{Binding Calories}" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" FontSize="Default" />
+                                
+                            </Grid>
+                        
                     </ViewCell>
                 </DataTemplate>
                 <DataTemplate x:Key="addFoodTemplate">
-                    <ViewCell>
-                        <StackLayout Padding="10" Orientation="Horizontal">
-                            <Label Text="Add" LineBreakMode="NoWrap" Style="{DynamicResource ListItemTextStyle}" FontSize="12" />
-                        </StackLayout>
+                    <ViewCell Height="40">
+                              <Grid Padding="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40"/>        
+                                </Grid.RowDefinitions>
+                                
+                                <Grid.ColumnDefinitions>                                    
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+    
+                                <Image HorizontalOptions="Center" Grid.Column="0" Grid.Row="0" Source="icons8-plus-30.png"/>
+                            </Grid>
                     </ViewCell>
                 </DataTemplate>
             <local:LogFoodOverviewDataTemplateSelector x:Key="logFoodOverviewDataTemplateSelector"
@@ -33,20 +60,31 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <StackLayout>
-        <ListView x:Name="ItemsListView" ItemsSource="{Binding Items}" 
+
+        <ListView x:Name="ItemsListView" 
+                  ItemsSource="{Binding Items}" 
                   SeparatorVisibility="None"
-                    HasUnevenRows="true" IsPullToRefreshEnabled="true"  
+                  HasUnevenRows="true"
+                  IsPullToRefreshEnabled="true"  
                   RefreshCommand="{Binding LoadItemsCommand}"
                   IsRefreshing="{Binding IsBusy, Mode=OneWay}"
-                  IsGroupingEnabled="true" ItemSelected="OnItemSelected"
+                  IsGroupingEnabled="true" 
+                  ItemSelected="OnItemSelected"
                   ItemTemplate="{StaticResource logFoodOverviewDataTemplateSelector}">
             <ListView.GroupHeaderTemplate>
                 <DataTemplate>
-                    <ViewCell>
-                        <StackLayout BackgroundColor="#eee" Orientation="Vertical" Margin="5" Padding="5">
+                    <ViewCell>                    
+                        <StackLayout BackgroundColor="#000" Orientation="Vertical" 
+                                     Margin="0" Padding="5">
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="ListHeaderTapped" 
+                                                      CommandParameter="{Binding .}"/>
+                            </StackLayout.GestureRecognizers>
+                            
                             <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding Title}" FontSize="Small"/>
-                                <Label Text="{Binding Calculated}" FontSize="Small"/>                
+                                <Label TextColor="White" Text="{Binding Title}" FontSize="Small"/>
+                                <Label TextColor="White" Text="{Binding Calculate}" FontSize="Small"/>
+                                <Label TextColor="White" Text="{Binding Calories}" FontSize="Small"/>
                             </StackLayout>
                         </StackLayout>
                     </ViewCell>
@@ -54,4 +92,5 @@
             </ListView.GroupHeaderTemplate>
         </ListView>
     </StackLayout>
+
 </ContentPage>
