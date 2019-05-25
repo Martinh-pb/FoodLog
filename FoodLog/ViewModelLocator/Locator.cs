@@ -17,7 +17,7 @@ namespace FoodLog.ViewModelLocator
             get
             {
                 var ret = dayViewModel ?? (dayViewModel = new LogDayViewModel(new DummyFoodRepository()));
-
+                CreateItemsViewModelData(ret);
                 ret.BreakFast.Calculated = ret.BreakFast.Calcutate();
                 return ret;
 
@@ -39,6 +39,7 @@ namespace FoodLog.ViewModelLocator
             try
             {
                 item.BreakFast.Add(pd);
+                item.BreakFast.Add(new FoodPerDay() { Id = -1, MealType = MealType.BreakFast });
             }
             catch (Exception e)
             {

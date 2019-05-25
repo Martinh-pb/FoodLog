@@ -11,6 +11,16 @@ namespace FoodLog.FoodModels
         public string Title { get; set; }
         public MealType MealType { get; set; }
 
+        private bool showPercentage;
+        public bool ShowPercentage
+        {
+            get { return showPercentage; }
+            set
+            {
+                showPercentage = value;
+            }
+        }
+
         private string calculated;
         public string Calculated
         {
@@ -26,13 +36,21 @@ namespace FoodLog.FoodModels
         }
 
         public string Calcutate() 
-        { 
-            return string.Format("c {1} ({2}%) - e {3} ({4}%) - v {5} ({6}%) - {0} kcal",
-                    Calories,
-                    Carb, CarbInPercent, 
-                    Protein, ProteinInPercent, 
-                    Fat, FatInPercent);
-            //return calculated;//
+        {
+            if (ShowPercentage)
+            {
+                return string.Format("c {0}% - e {1}% - v {2}%",
+                        CarbInPercent,
+                        ProteinInPercent,
+                        FatInPercent);
+            }
+            else
+            {
+                return string.Format("c {0} - e {1} - v {2}",
+                        Carb,
+                        Protein,
+                        Fat);
+            }
         }
 
         private double calcCarbs;
@@ -116,6 +134,7 @@ namespace FoodLog.FoodModels
         {
             Title = title;
             MealType = mealType;
+            ShowPercentage = true;
         }
     }
 }

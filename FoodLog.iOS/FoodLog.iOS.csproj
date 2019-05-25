@@ -124,6 +124,13 @@
     <BundleResource Include="Resources\xamarin_logo%402x.png" />
     <BundleResource Include="Resources\xamarin_logo%403x.png" />
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
+    <BundleResource Include="Resources\icons8-back-30.png" />
+    <BundleResource Include="Resources\icons8-forward-30.png" />
+    <BundleResource Include="Resources\icons8-plus-30.png" />
+    <BundleResource Include="Resources\icons8-barcode-scanner-30.png" />
+    <BundleResource Include="Resources\icons8-plus-math-30.png" />
+    <BundleResource Include="Resources\icons8-save-30.png" />
+    <BundleResource Include="Resources\icons8-delete-30.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

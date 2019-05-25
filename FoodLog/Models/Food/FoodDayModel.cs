@@ -32,6 +32,9 @@ namespace FoodLog.FoodModels
         {
             get
             {
+                if (Food == null)
+                    return 0;
+
                 return Calc(Food.Calories, Food.Portion, Amount);
             }
         }
@@ -40,7 +43,10 @@ namespace FoodLog.FoodModels
         {
             get
             {
-                return Calc(Food.Carbs, Food.Portion, Amount);
+                if (Food == null)
+                    return 0;
+
+                 return Calc(Food.Carbs, Food.Portion, Amount);
             }
         }
 
@@ -48,6 +54,9 @@ namespace FoodLog.FoodModels
         {
             get
             {
+                if (Food == null)
+                    return 0;
+
                 return Calc(Food.Protein, Food.Portion, Amount);
             }
         }
@@ -56,6 +65,9 @@ namespace FoodLog.FoodModels
         {
             get
             {
+                if (Food == null)
+                    return 0;
+
                 return Calc(Food.Fat, Food.Portion, Amount);
             }
         }

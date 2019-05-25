@@ -25,12 +25,16 @@ namespace FoodLog.ViewModels.LogFood
         public FoodDayGroup Snack { get; set; }
 
         public DateTime Date { get; set; }
+        public string DateText
+        {
+            get { return Date.ToString("dddd dd MMMM yy"); }
+        }
 
         public LogDayViewModel(IFoodRepository foodRepository)
         {
             FoodRepository = foodRepository;
 
-            Title = "Browse";
+            Title = "";
             Items = new ObservableCollection<FoodDayGroup>();
 
             Date = DateTime.MinValue;
@@ -66,7 +70,30 @@ namespace FoodLog.ViewModels.LogFood
         async Task ExecuteDayCommand()
         {
             Date = DateTime.Today;
+            OnPropertyChanged("DateText");
 
+            await ExecuteLoadItemsCommand();
+        }
+
+        public void SwitchHeader(FoodDayGroup grp)
+        {
+            if (grp != null)
+            {
+                grp.ShowPercentage = !grp.ShowPercentage;
+            }
+        }
+
+        async internal void GotoNextDate()
+        {
+            Date = Date.AddDays(1);
+            OnPropertyChanged("DateText");
+            await ExecuteLoadItemsCommand();
+        }
+
+        async internal void GotoPreviousDate()
+        {
+            Date = Date.AddDays(-1);
+            OnPropertyChanged("DateText");
             await ExecuteLoadItemsCommand();
         }
 
@@ -79,8 +106,6 @@ namespace FoodLog.ViewModels.LogFood
 
             try
             {
-                //var tst = await FoodDatabase.GetAll();
-
                 List<FoodPerDay> entries = await FoodRepository.GetFoodForDay(Date);
 
                 BreakFast.Clear();

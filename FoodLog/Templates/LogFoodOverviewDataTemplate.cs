@@ -14,5 +14,6 @@ namespace FoodLog.Templates
             FoodPerDay f = item as FoodPerDay;
             return f.Id >= 0 ? LogFoodTemplate : AddFoodTemplate;
         }
+        
     }
 }

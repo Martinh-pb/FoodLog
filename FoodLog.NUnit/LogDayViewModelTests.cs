@@ -1,5 +1,6 @@
 ﻿using System;
 using FoodLog.FoodData;
+using FoodLog.ViewModelLocator;
 using FoodLog.ViewModels.LogFood;
 using Moq;
 using NUnit.Framework;
@@ -22,6 +23,16 @@ namespace FoodLog.NUnit
             Assert.IsNotNull(m.Lunch); 
             Assert.IsNotNull(m.Diner); 
             Assert.IsNotNull(m.Snack);
+        }
+
+        [Test]
+        public void TestDesignerViewMode()
+        {
+            var m = ViewModelLocator.ViewModelLocator.ItemsViewModel;
+            Assert.IsNotNull(m);
+            Assert.IsNotNull(m.Items);
+            Assert.AreEqual(4, m.Items.Count);
+            Assert.AreEqual(2, m.Items[0].Count);
         }
     }
 }
