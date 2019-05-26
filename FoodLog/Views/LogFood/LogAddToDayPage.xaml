@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="FoodLog.Views.LogFood.LogAddToDayPage">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Cancel" Clicked="Cancel_Clicked" />
@@ -29,7 +29,7 @@
               <Button Text="{Binding Carbs}" Grid.Row="1" Grid.Column="1" />
               <Button Text="{Binding Protein}" Grid.Row="1" Grid.Column="2" />
               <Button Text="{Binding Fat}" Grid.Row="1" Grid.Column="3" />
-              <Button Text="" Grid.Row="2" Grid.Column="0" />
+              <Button Text="In %:" Grid.Row="2" Grid.Column="0" />
               <Button Text="{Binding CarbsPerc}" Grid.Row="2" Grid.Column="1" />
               <Button Text="{Binding ProteinPerc}" Grid.Row="2" Grid.Column="2" />
               <Button Text="{Binding FatPerc}" Grid.Row="2" Grid.Column="3" />

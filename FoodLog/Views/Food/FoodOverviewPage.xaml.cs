@@ -26,6 +26,11 @@ namespace FoodLog.Views.Food
             await Navigation.PushModalAsync(new NavigationPage(new FoodAddPage()));
         }
 
+        async void Handle_TextChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
+        {
+            await viewModel.SearchTextChanged(e.NewTextValue);
+        }
+
         async void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
         {
             FoodModels.Food f = e.SelectedItem as FoodModels.Food;

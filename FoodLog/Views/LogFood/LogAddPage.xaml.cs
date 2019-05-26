@@ -34,6 +34,10 @@ namespace FoodLog.Views.LogFood
             FoodListView.SelectedItem = null;
         }
 
+        async void Handle_TextChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
+        {
+            await viewModel.SearchTextChanged(e.NewTextValue);
+        }
 
         async void Save_Clicked(object sender, EventArgs e)
         {

@@ -69,7 +69,7 @@ namespace FoodLog.FoodData
 
         public Task<List<Food>> FindFood(string search)
         {
-            return _database.Table<Food>().Where(f => f.Name.Contains(search)).ToListAsync();
+            return _database.Table<Food>().Where(f => f.Name.ToUpper().Contains(search.ToUpper())).ToListAsync();
         }
 
         public Task<Food> FoodById(int Id)

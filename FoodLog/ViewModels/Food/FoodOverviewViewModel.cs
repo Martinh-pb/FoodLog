@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using FoodLog.FoodData;
@@ -38,6 +40,21 @@ namespace FoodLog.ViewModels
             return await FoodRepository.SaveFood(food);
         }
 
+        internal async Task SearchTextChanged(string newTextValue)
+        {
+            if (string.IsNullOrEmpty(newTextValue))
+            {
+                await ExecuteDayCommand();
+            }
+            else
+            {
+                var r = await FoodRepository.FindFood(SearchText);
+                Foods.Clear();
+                r.ForEach(i => Foods.Add(i));
+                OnPropertyChanged("Foods");
+            }
+        }
+
         private ICommand _searchCommand;
         public ICommand SearchCommand
         {
@@ -45,10 +62,13 @@ namespace FoodLog.ViewModels
             {
                 return _searchCommand ?? (_searchCommand = new Command<string>(async (text) =>
                 {
+                    await SearchTextChanged(text);
+                    /*
                     var r =  await FoodRepository.FindFood(SearchText);
                     Foods.Clear();
                     r.ForEach(i => Foods.Add(i));
                     OnPropertyChanged("Foods");
+                    */                   
                 }));
             }
         }

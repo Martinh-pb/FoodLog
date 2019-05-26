@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using FoodLog.FoodData;
 using FoodLog.FoodModels;
@@ -41,6 +42,13 @@ namespace FoodLog.ViewModels.LogFood
             SelectedMealType = MealTypes.First(f => f.MealType == entry.MealType);
         }
 
+        internal async Task SearchTextChanged(string newTextValue)
+        {
+            var r = await FoodRepository.FindFood(newTextValue);
+            SelectableFoods.Clear();
+            r.ForEach(i => SelectableFoods.Add(i));
+        }
+
         private ICommand _searchCommand;
         public ICommand SearchCommand
         {
@@ -48,9 +56,7 @@ namespace FoodLog.ViewModels.LogFood
             {
                 return _searchCommand ?? (_searchCommand = new Command<string>(async (text) =>
                 {
-                    var r = await FoodRepository.FindFood(SearchText);
-                    SelectableFoods.Clear();
-                    r.ForEach(i => SelectableFoods.Add(i));
+                    await SearchTextChanged(text);
                 }));
             }
         }
