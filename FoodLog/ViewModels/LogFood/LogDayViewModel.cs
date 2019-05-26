@@ -24,6 +24,11 @@ namespace FoodLog.ViewModels.LogFood
         public FoodDayGroup Diner { get; set; }
         public FoodDayGroup Snack { get; set; }
 
+        public string TotalEnergy { get; set; }
+        public string CarbDescrip { get; set; }
+        public string ProteinDescrip { get; set; }
+        public string FatDescrip { get; set; }
+
         public DateTime Date { get; set; }
         public string DateText
         {
@@ -83,7 +88,14 @@ namespace FoodLog.ViewModels.LogFood
         {
             if (grp != null)
             {
-                grp.ShowPercentage = !grp.ShowPercentage;
+                bool showPercentage = !grp.ShowPercentage;
+
+                BreakFast.ShowPercentage = showPercentage;
+                Lunch.ShowPercentage = showPercentage;
+                Diner.ShowPercentage = showPercentage;
+                Snack.ShowPercentage = showPercentage;
+
+                Calculate();
             }
         }
 
@@ -144,10 +156,7 @@ namespace FoodLog.ViewModels.LogFood
                 }
                 Snack.Add(new FoodPerDay() { Id = -1, Date = Date, Time = Date, MealType = MealType.Snack });
 
-                BreakFast.Calcutate();
-                Lunch.Calcutate();
-                Diner.Calcutate();
-                Snack.Calcutate();
+                Calculate();
             }
             catch (Exception ex)
             {
@@ -157,6 +166,34 @@ namespace FoodLog.ViewModels.LogFood
             {
                 IsBusy = false;
             }
+        }
+
+        private void Calculate()
+        {
+            BreakFast.Calcutate();
+            Lunch.Calcutate();
+            Diner.Calcutate();
+            Snack.Calcutate();
+
+            TotalEnergy = $"{Math.Round(Items.Sum(s => s.Calories), 1, MidpointRounding.ToEven):N2}";
+            if (BreakFast.ShowPercentage)
+            {
+
+                CarbDescrip = $"Carbs: {Math.Round(Items.Sum(s => s.CarbInPercent), 1, MidpointRounding.ToEven):N2}%";
+                ProteinDescrip = $"Prot: {Math.Round(Items.Sum(s => s.ProteinInPercent), 1, MidpointRounding.ToEven):N2}%";
+                FatDescrip = $"Fat: {Math.Round(Items.Sum(s => s.FatInPercent), 1, MidpointRounding.ToEven):N2}%";
+            }
+            else
+            {
+                CarbDescrip = $"Carbs: {Math.Round(Items.Sum(s => s.Carbs), 1, MidpointRounding.ToEven):N2}";
+                ProteinDescrip = $"Prot {Math.Round(Items.Sum(s => s.Protein), 1, MidpointRounding.ToEven):N2}";
+                FatDescrip = $"Fat: {Math.Round(Items.Sum(s => s.Fat), 1, MidpointRounding.ToEven):N2}";
+            }
+
+            OnPropertyChanged("TotalEnergy");
+            OnPropertyChanged("CarbDescrip");
+            OnPropertyChanged("ProteinDescrip");
+            OnPropertyChanged("FatDescrip");
         }
     }
 }

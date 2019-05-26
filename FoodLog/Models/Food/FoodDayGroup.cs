@@ -33,33 +33,19 @@ namespace FoodLog.FoodModels
         {
             string perc = ShowPercentage ? "%" : string.Empty;
 
-            CarbDescrip = string.Format("Carb {0}{1}",
-                    ShowPercentage ? CarbInPercent : Carb,
-                    perc);
-
-            ProteinDescrip = string.Format("Prot {0}{1}",
-                    ShowPercentage ? ProteinInPercent : Protein,
-                    perc);
-
-            FatDescrip = string.Format("Fat {0}{1}",
-                    ShowPercentage ? FatInPercent : Fat,
-                    perc);
-
-            CaloriesDescrip = string.Format("{0}",
-                    Calories);
-
             if (ShowPercentage)
             {
-
+                CarbDescrip = $"Carbs {Math.Round(CarbInPercent, 1, MidpointRounding.ToEven):N2}%";
+                ProteinDescrip =$"Prot {Math.Round(ProteinInPercent, 1, MidpointRounding.ToEven):N2}%";
+                FatDescrip = $"Fat {Math.Round(FatInPercent, 1, MidpointRounding.ToEven):N2}%";
+                CaloriesDescrip = $"{Math.Round(Calories,1, MidpointRounding.ToEven):N2}";
             }
             else
             {
-                /*
-                return string.Format("c {0} - e {1} - v {2}",
-                        Carb,
-                        Protein,
-                        Fat);
-                        */                       
+                CarbDescrip = $"Carbs {Math.Round(Carbs, 1, MidpointRounding.ToEven):N2}";
+                ProteinDescrip = $"Prot {Math.Round(Protein, 1, MidpointRounding.ToEven):N2}";
+                FatDescrip = $"Fat {Math.Round(Fat, 1, MidpointRounding.ToEven):N2}";
+                CaloriesDescrip = $"{Math.Round(Calories, 1, MidpointRounding.ToEven):N2}";
             }
         }
 
@@ -119,7 +105,7 @@ namespace FoodLog.FoodModels
             }
         }
 
-        private double Calories 
+        public double Calories 
         { 
             get 
             {
@@ -127,7 +113,7 @@ namespace FoodLog.FoodModels
             }
         }
 
-        private double Carb
+        public double Carbs
         {
             get
             {
@@ -135,15 +121,15 @@ namespace FoodLog.FoodModels
             }
         }
 
-        private double CarbInPercent
+        public double CarbInPercent
         {
             get
             {
-                return CalculatePercentage(Carb);
+                return CalculatePercentage(Carbs);
             }
         }
 
-        private double Protein
+        public double Protein
         {
             get
             {
@@ -151,7 +137,7 @@ namespace FoodLog.FoodModels
             }
         }
 
-        private double ProteinInPercent
+        public double ProteinInPercent
         {
             get
             {
@@ -159,7 +145,7 @@ namespace FoodLog.FoodModels
             }
         }
 
-        private double Fat
+        public double Fat
         {
             get
             {
@@ -167,7 +153,7 @@ namespace FoodLog.FoodModels
             }
         }
 
-        private double FatInPercent
+        public double FatInPercent
         {
             get
             {
@@ -177,12 +163,12 @@ namespace FoodLog.FoodModels
 
         private double CalculatePercentage(double toCalc)
         {
-            double total = Carb + Fat + Protein;
+            double total = Carbs + Fat + Protein;
 
             if (Math.Abs(total) < 1)
                 return 0;
 
-            return Math.Round((toCalc / total) * 100);
+            return (toCalc / total) * 100;
         }
 
     }

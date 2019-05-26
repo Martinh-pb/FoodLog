@@ -26,8 +26,50 @@ namespace FoodLog.FoodModels
         public DateTime Date { get; set; }
         public DateTime Time { get; set; }
         public MealType MealType { get; set; }
-        public double Amount { get; set; }
         public Food Food { get; set; }
+
+        public FoodPerDay()
+        {
+            Macros = new Macros();
+        }
+
+        public void Calculate()
+        {
+            if (Food != null)
+            {
+                Macros = Food.GetMacros(_amount);
+            }
+            else
+            {
+                Macros = new Macros();
+            }
+        }
+
+        private double _amount;
+        public double Amount
+        {
+            get 
+            { 
+                return _amount; 
+            }
+            set
+            {
+                _amount = value;
+
+                Calculate();
+
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Calories"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Carb"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Fat"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Protein"));
+            }
+        }
+
+        private Macros Macros
+        {
+            get;set;
+        }
+
 
         public string AmountDescription
         {
@@ -36,8 +78,7 @@ namespace FoodLog.FoodModels
                 if (Food == null)
                     return string.Empty;
 
-                string desc = Food.PortionType == PortionType.Gram ? "gram" : "ml";
-                return string.Format("{0} {1}", Amount, desc);
+                return Food.GetPortionDescription(Amount);
             }
         }
 
@@ -45,10 +86,7 @@ namespace FoodLog.FoodModels
         {
             get
             {
-                if (Food == null)
-                    return 0;
-
-                return Calc(Food.Calories, Food.Portion, Amount);
+                return Macros.Calories;
             }
         }
 
@@ -56,10 +94,7 @@ namespace FoodLog.FoodModels
         {
             get
             {
-                if (Food == null)
-                    return 0;
-
-                 return Calc(Food.Carbs, Food.Portion, Amount);
+                return Macros.Carbs;
             }
         }
 
@@ -67,10 +102,7 @@ namespace FoodLog.FoodModels
         {
             get
             {
-                if (Food == null)
-                    return 0;
-
-                return Calc(Food.Protein, Food.Portion, Amount);
+                return Macros.Protein;
             }
         }
 
@@ -78,19 +110,12 @@ namespace FoodLog.FoodModels
         {
             get
             {
-                if (Food == null)
-                    return 0;
-
-                return Calc(Food.Fat, Food.Portion, Amount);
+                return Macros.Fat;
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public static double Calc(double item, double portion, double Amount)
-        {
-            return (item / portion) * Amount;
-        }
 
         public object Clone()
         {
@@ -101,8 +126,28 @@ namespace FoodLog.FoodModels
             f.Time = Time;
             f.MealType = MealType;
             f.Food = Food.Clone() as Food;
+            f.Macros = Macros.Clone() as Macros;
 
             return f;
+        }
+    }
+
+    public class Macros : ICloneable
+    { 
+        public double Calories { get; set; }
+        public double Carbs { get; set; }
+        public double Fat { get; set; }
+        public double Protein { get; set; }
+
+        public object Clone()
+        {
+            var c = new Macros();
+            c.Calories = Calories;
+            c.Carbs = Carbs;
+            c.Fat = Fat;
+            c.Protein = Protein;
+
+            return c;
         }
     }
 
@@ -122,6 +167,28 @@ namespace FoodLog.FoodModels
         public double Fiber { get; set; }
         public double Natrium { get; set; }
         public string BarCode { get; set; }
+
+        public double Calc(double item, double Amount)
+        {
+            return (item / Portion) * Amount;
+        }
+
+        public Macros GetMacros(double amount)
+        {
+            Macros m = new Macros();
+            m.Calories = Calc(Calories, amount);
+            m.Carbs = Calc(Carbs, amount);
+            m.Fat = Calc(Fat, amount);
+            m.Protein = Calc(Protein, amount);
+
+            return m;
+        }
+
+        public string GetPortionDescription(double amount)
+        {
+            string desc = PortionType == PortionType.Gram ? "gram" : "ml";
+            return string.Format("{0} {1}", amount, desc);
+        }
 
         public object Clone()
         {

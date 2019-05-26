@@ -105,8 +105,8 @@ namespace FoodLog.FoodData
             {
                 Id = dayEntry.Id,
                 Date = dayEntry.Date,
-                Amount = dayEntry.Amount,
                 Food = food,
+                Amount = dayEntry.Amount,
                 MealType = (MealType)dayEntry.MealType,
             };
         }

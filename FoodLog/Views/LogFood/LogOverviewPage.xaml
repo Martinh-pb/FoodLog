@@ -17,39 +17,48 @@
                 <Setter Property="TextColor" Value="#FFF"/>
                 <Setter Property="BorderRadius" Value="10"/>
             </Style>
-           
+   
+            <!-- 
+                    <ViewCell.ContextActions>            
+                        <MenuItem Clicked="OnDelete" CommandParameter="{Binding .}"
+                           Text="Delete" IsDestructive="True" />
+                    </ViewCell.ContextActions>
+            -->
+            
             <DataTemplate x:Key="logFoodTemplate">
                 <ViewCell>
-                        <Grid Margin="5,0,5,0" Padding="0,5,0,5" RowSpacing="0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="20"/>
-                                <RowDefinition Height="15"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="8*"/>
-                                <ColumnDefinition Width="2*"/>
-                            </Grid.ColumnDefinitions>
-                            
-                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding Food.Name}" FontSize="Small"/>
-                            <Label Grid.Row="0" Grid.Column="1" HorizontalOptions="End" Text="{Binding Calories}" FontSize="Small"/>
-                            <Label Grid.Row="1" Grid.Column="0" Text="{Binding AmountDescription}" FontSize="Micro"/>
-                        </Grid>
-                    </ViewCell>
+
+                    <Grid Margin="5,0,5,0" Padding="0,5,0,5" RowSpacing="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="15"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="8*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <Label Grid.Row="0" Grid.Column="0" Text="{Binding Food.Name}" FontSize="Small"/>
+                        <Label Grid.Row="0" Grid.Column="1" HorizontalOptions="End" Text="{Binding Calories}" FontSize="Small"/>
+                        <Label Grid.Row="1" Grid.Column="0" Text="{Binding AmountDescription}" FontSize="Micro"/>
+                    </Grid>
+                </ViewCell>
             </DataTemplate>
             
             <DataTemplate x:Key="addFoodTemplate">
                 <ViewCell Height="40">
-                          <Grid Padding="5">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="40"/>        
-                            </Grid.RowDefinitions>
-                            
-                            <Grid.ColumnDefinitions>                                    
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
+                    
+                      <Grid Padding="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>        
+                        </Grid.RowDefinitions>
+                        
+                        <Grid.ColumnDefinitions>                                    
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
 
-                            <Image HorizontalOptions="Center" Grid.Column="0" Grid.Row="0" Source="icons8-plus-30.png"/>
-                        </Grid>
+                        <Image HorizontalOptions="Center" Grid.Column="0" Grid.Row="0" Source="icons8-plus-30.png"/>
+                    </Grid>
                 </ViewCell>
             </DataTemplate>
             
@@ -59,7 +68,26 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <StackLayout>
-
+    
+        <Grid Margin="5,5,5,5" Padding="0,0,0,5" RowSpacing="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="20"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>                                                              
+                </Grid.ColumnDefinitions>
+            
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalOptions="End" Text="{Binding TotalEnergy}"/>
+                
+                <Label Grid.Row="1" Grid.Column="0" Text="{Binding CarbDescrip}" VerticalOptions="Center" FontSize="Micro"/>
+                <Label Grid.Row="1" Grid.Column="1" Text="{Binding ProteinDescrip}" VerticalOptions="Center" FontSize="Micro"/>
+                <Label Grid.Row="1" Grid.Column="2" Text="{Binding FatDescrip}" VerticalOptions="Center" FontSize="Micro"/>
+                
+            </Grid>
+             
         <ListView x:Name="ItemsListView" 
                   ItemsSource="{Binding Items}" 
                   SeparatorVisibility="None"

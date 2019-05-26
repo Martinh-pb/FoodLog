@@ -23,8 +23,22 @@ namespace FoodLog.ViewModelLocator
                 var ret = recipeOverviewModel ?? (recipeOverviewModel = new RecipeOverviewViewModel(null));
                 if (ret.Recipes.Count == 0)
                 {
-                    ret.Recipes.Add(new Models.Recipe.Recipe() {Id = 1, Name = "Keto baked omelet with bacon"});
-                    ret.Recipes.Add(new Models.Recipe.Recipe() { Id = 2, Name = "Keto mayonaise" });
+                    var r1 = new Models.Recipe.Recipe() { Id = 1, Name = "Keto baked omelet with bacon" };
+                    r1.Add(new Models.Recipe.RecipeItem() {
+                        Food = new Food() { Id = 1, Calories = 90, Carbs = 1, Fat = 12, Protein = 9, Fiber = 0, Portion = 55, PortionType = PortionType.Gram, Name = "Ei"},
+                        Amount = 3, Id = 1, RecipeId = 1
+                     });
+
+                    var r2 = new Models.Recipe.Recipe() { Id = 2, Name = "Keto mayonaise" };
+                    r1.Add(new Models.Recipe.RecipeItem()
+                    {
+                        Food = new Food() { Id = 1, Calories = 90, Carbs = 1, Fat = 12, Protein = 9, Fiber = 0, Portion = 55, PortionType = PortionType.Gram, Name = "Ei" },
+                        Amount = 2,
+                        Id = 1,
+                        RecipeId = 1
+                    });
+                    ret.Recipes.Add(r1);
+                    ret.Recipes.Add(r2);
                 }
 
                 return ret;
@@ -58,6 +72,11 @@ namespace FoodLog.ViewModelLocator
                     ret.Items.Add(brk);
                     ret.BreakFast = brk;
                     CreateItemsViewModelData(brk);
+
+                    ret.CarbDescrip = "12.00";
+                    ret.ProteinDescrip = "20.00";
+                    ret.FatDescrip = "40.00";
+                    ret.TotalEnergy = "500.00";
                     //Lunch = new FoodDayGroup("Lunch", MealType.Lunch);
                     //Items.Add(Lunch);
 

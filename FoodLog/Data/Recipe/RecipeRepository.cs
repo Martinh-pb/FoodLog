@@ -34,7 +34,7 @@ namespace FoodLog.RecipeData
                     RecipeItem recipeItem = ConvertFromDb(recipeItemDB);
                     recipeItem.Food = FoodRepository.ConvertFromDb(foodDb);
 
-                    recipe.Items.Add(recipeItem);
+                    recipe.Add(recipeItem);
                 }
             }
 
