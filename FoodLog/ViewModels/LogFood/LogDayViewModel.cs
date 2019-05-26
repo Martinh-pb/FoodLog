@@ -10,6 +10,7 @@ using FoodLog.FoodModels;
 using FoodLog.Views.LogFood;
 using System.Collections.Generic;
 using FoodLog.FoodData;
+using FoodLog.Helper;
 
 namespace FoodLog.ViewModels.LogFood
 {
@@ -175,19 +176,27 @@ namespace FoodLog.ViewModels.LogFood
             Diner.Calcutate();
             Snack.Calcutate();
 
-            TotalEnergy = $"{Math.Round(Items.Sum(s => s.Calories), 1, MidpointRounding.ToEven):N2}";
+            double calories = Items.Sum(s => s.Calories);
+            double carbs = Items.Sum(s => s.Carbs);
+            double fat = Items.Sum(s => s.Fat);
+            double protein = Items.Sum(s => s.Protein);
+
+            TotalEnergy = $"{Math.Round(calories, 1, MidpointRounding.ToEven):N2}";
             if (BreakFast.ShowPercentage)
             {
+                double carbInPercentage = Calculator.CalculatePercentage(Macro.Carbs, carbs, fat, protein);
+                double proteinInPercentage = Calculator.CalculatePercentage(Macro.Protein, carbs, fat, protein);
+                double fatInPercentage = Calculator.CalculatePercentage(Macro.Fat, carbs, fat, protein);
 
-                CarbDescrip = $"Carbs: {Math.Round(Items.Sum(s => s.CarbInPercent), 1, MidpointRounding.ToEven):N2}%";
-                ProteinDescrip = $"Prot: {Math.Round(Items.Sum(s => s.ProteinInPercent), 1, MidpointRounding.ToEven):N2}%";
-                FatDescrip = $"Fat: {Math.Round(Items.Sum(s => s.FatInPercent), 1, MidpointRounding.ToEven):N2}%";
+                CarbDescrip = Calculator.GetRoundedValue(carbInPercentage, "Carbs", true);
+                ProteinDescrip = Calculator.GetRoundedValue(proteinInPercentage, "Prot", true);
+                FatDescrip = Calculator.GetRoundedValue(fatInPercentage, "Fat", true);
             }
             else
             {
-                CarbDescrip = $"Carbs: {Math.Round(Items.Sum(s => s.Carbs), 1, MidpointRounding.ToEven):N2}";
-                ProteinDescrip = $"Prot {Math.Round(Items.Sum(s => s.Protein), 1, MidpointRounding.ToEven):N2}";
-                FatDescrip = $"Fat: {Math.Round(Items.Sum(s => s.Fat), 1, MidpointRounding.ToEven):N2}";
+                CarbDescrip = Calculator.GetRoundedValue(carbs, "Carbs", false);
+                ProteinDescrip = Calculator.GetRoundedValue(protein, "Prot", false);
+                FatDescrip = Calculator.GetRoundedValue(fat, "Fat", false);
             }
 
             OnPropertyChanged("TotalEnergy");

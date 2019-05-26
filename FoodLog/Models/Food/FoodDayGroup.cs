@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using FoodLog.Helper;
 
 namespace FoodLog.FoodModels
 {
@@ -33,19 +34,21 @@ namespace FoodLog.FoodModels
         {
             string perc = ShowPercentage ? "%" : string.Empty;
 
+            CaloriesDescrip = $"{Math.Round(Calories, 1, MidpointRounding.ToEven):N2}";
+
             if (ShowPercentage)
             {
-                CarbDescrip = $"Carbs {Math.Round(CarbInPercent, 1, MidpointRounding.ToEven):N2}%";
-                ProteinDescrip =$"Prot {Math.Round(ProteinInPercent, 1, MidpointRounding.ToEven):N2}%";
-                FatDescrip = $"Fat {Math.Round(FatInPercent, 1, MidpointRounding.ToEven):N2}%";
-                CaloriesDescrip = $"{Math.Round(Calories,1, MidpointRounding.ToEven):N2}";
+                CarbDescrip = Calculator.GetRoundedValue(CarbInPercent, "Carbs", true);
+                ProteinDescrip = Calculator.GetRoundedValue(ProteinInPercent, "Prot", true);
+                FatDescrip = Calculator.GetRoundedValue(FatInPercent, "Fat", true);
+
+
             }
             else
             {
-                CarbDescrip = $"Carbs {Math.Round(Carbs, 1, MidpointRounding.ToEven):N2}";
-                ProteinDescrip = $"Prot {Math.Round(Protein, 1, MidpointRounding.ToEven):N2}";
-                FatDescrip = $"Fat {Math.Round(Fat, 1, MidpointRounding.ToEven):N2}";
-                CaloriesDescrip = $"{Math.Round(Calories, 1, MidpointRounding.ToEven):N2}";
+                CarbDescrip = Calculator.GetRoundedValue(Carbs, "Carbs", false);
+                ProteinDescrip = Calculator.GetRoundedValue(Protein, "Prot", false);
+                FatDescrip = Calculator.GetRoundedValue(Fat, "Fat", false);
             }
         }
 

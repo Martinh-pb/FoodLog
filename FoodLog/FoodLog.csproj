@@ -38,6 +38,7 @@
     <Folder Include="Data\Food\" />
     <Folder Include="Data\Recipe\" />
     <Folder Include="Templates\" />
+    <Folder Include="Helper\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.ComponentModel.Annotations">

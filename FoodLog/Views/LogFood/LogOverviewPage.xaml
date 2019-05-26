@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             xmlns:local="clr-namespace:FoodLog.Templates"
-             xmlns:design="clr-namespace:FoodLog;"
-             x:Class="FoodLog.Views.LogFood.LogOverviewPage"
-             BindingContext="{x:Static design:ViewModelLocator.ViewModelLocator.ItemsViewModel}">
+             xmlns:local="clr-namespace:FoodLog.Templates"             
+             x:Class="FoodLog.Views.LogFood.LogOverviewPage">
+             <!--
+                xmlns:design="clr-namespace:FoodLog;"
+                BindingContext="{x:Static design:ViewModelLocator.ViewModelLocator.ItemsViewModel}"
+              -->
     <ContentPage.ToolbarItems>
         <ToolbarItem Icon="icons8-back-30.png" Clicked="Previous_Date_Clicked"/>
         <ToolbarItem Text="{Binding DateText}" />
